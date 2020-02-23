@@ -1381,7 +1381,7 @@ namespace FyTek
                     if (waitForExit){
                         StreamWriter inputCmds = exeProcess.StandardInput;
                         foreach (String value in cmds){
-                            inputCmds.WriteLine(value);
+                            inputCmds.Write(value);
                         }
                         inputCmds.Close();
                     }
