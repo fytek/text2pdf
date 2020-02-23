@@ -863,7 +863,7 @@ namespace FyTek
         [ComVisible(true)]
         public Double setTextCompress(Double x)
         {
-          setOpt("comp",a);          
+          setOpt("comp",x);          
           return x;
         }  
         [Obsolete("TextCompress is deprecated, please use setTextCompress instead.")]
