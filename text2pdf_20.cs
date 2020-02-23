@@ -63,7 +63,7 @@ namespace FyTek
         private Dictionary<string,object> server = new Dictionary<string,object>(); // the server host/port/log file key/values
 
         private String units = "";
-        private Double unitsMult = 1;
+        private Double unitsMult = 72;
 
         [ComVisible(true)]
         public class Results {
@@ -350,6 +350,23 @@ namespace FyTek
             return addText(a);
         }
 
+        // Pass file contents in memory for input type files
+        [ComVisible(true)]
+        public int setAutoSize(int lines = 0)
+        {
+            if (lines == 0){
+                setOpt("autosize",true);
+            } else  {
+                setOpt("autosize",lines);
+            }
+            return lines;
+        }
+        [Obsolete("AutoSize is deprecated, please use setAutoSize instead.")]
+        [ComVisible(true)]
+        public int AutoSize(int lines = 0){
+            return setAutoSize(lines);
+        }
+
         // Assign the key name
         [ComVisible(true)]
         public String setKeyName(String a)
@@ -472,6 +489,16 @@ namespace FyTek
         [ComVisible(true)]
         public void NoPrint(){setNoPrint();}
 
+        // Set no rights
+        [ComVisible(true)]
+        public void setNoRights()
+        {
+            setOpt("norights",true);
+        }
+        [Obsolete("NoRights is deprecated, please use setNoRights instead.")]
+        [ComVisible(true)]
+        public void NoRights(){setNoRights();}
+
         // Set the GUI process window off
         [ComVisible(true)]
         public void setGUIOff()
@@ -523,6 +550,35 @@ namespace FyTek
         [ComVisible(true)]
         public String OutputFile(String a){return setOutFile(a);}
 
+        // Assign the output file name
+        [ComVisible(true)]
+        public String setFileMask(String a)
+        {
+            setOpt("mask",a);
+            return a;
+        }
+        [Obsolete("FileMask is deprecated, please use setFileMask instead.")]
+        [ComVisible(true)]
+        public String FileMask(String a){return setFileMask(a);}
+        
+        [ComVisible(true)]
+        public void setSubDir()
+        {
+            setOpt("s",true);
+        }
+        [Obsolete("SubDir is deprecated, please use setSubDir instead.")]
+        [ComVisible(true)]
+        public void SubDir(){setSubDir();}
+
+        [ComVisible(true)]
+        public void setMail()
+        {
+            setOpt("mail",true);
+        }
+        [Obsolete("AutoMail is deprecated, please use setMail instead.")]
+        [ComVisible(true)]
+        public void AutoMail(){setMail();}
+
         // Optimize
         [ComVisible(true)]
         public void setOptimize(bool compress = true)
@@ -567,6 +623,17 @@ namespace FyTek
         [Obsolete("EncryptAES is deprecated, please use setEncryptAES instead.")]
         [ComVisible(true)]
         public String EncryptAES(String a){return setEncryptAES(a);}
+
+        // open output
+        [ComVisible(true)]
+        public void setForwardRef()
+        {
+            setOpt("forwardref",true);
+        }        
+        [Obsolete("ForwardRef is deprecated, please use setForwardRef instead.")]
+        [ComVisible(true)]
+        public void ForwardRef(){setForwardRef();}
+
 
         // overwrite existing
         [ComVisible(true)]
@@ -618,6 +685,17 @@ namespace FyTek
             setOpt("e",fileName);
             return fileName;
         }        
+
+        [ComVisible(true)]
+        public String setWorkingDir(String a)
+        {
+            setOpt("cwd",a);
+            return a;
+        }        
+        [Obsolete("WorkingDir is deprecated, please use setWorkingDir instead.")]
+        [ComVisible(true)]
+        public String WorkingDir(String a){return setWorkingDir(a);}
+
 
         // subject
         [ComVisible(true)]
@@ -692,7 +770,7 @@ namespace FyTek
         public String setUnits(String a)
         {
           units = a.ToLower();
-          unitsMult = 1;
+          unitsMult *= 72;
           switch (units) {
             case "cm":
               unitsMult = 72 / 2.54;
@@ -707,7 +785,7 @@ namespace FyTek
               unitsMult = 1;
               break;
           }
-          setOpt("units",a);
+          unitsMult /= 72;
           return a;
         }      
         [Obsolete("Units is deprecated, please use setUnits instead.")]
@@ -773,6 +851,44 @@ namespace FyTek
         public Double PageDown(Double a){return setPageDown(a);}
 
         [ComVisible(true)]
+        public Double setPointPct(Double x)
+        {
+          setOpt("pointpct",x);          
+          return x;
+        }  
+        [Obsolete("PointPct is deprecated, please use setPointPct instead.")]
+        [ComVisible(true)]
+        public Double PointPct(Double a){return setPointPct(a);}
+
+        [ComVisible(true)]
+        public Double setTextCompress(Double x)
+        {
+          setOpt("comp",a);          
+          return x;
+        }  
+        [Obsolete("TextCompress is deprecated, please use setTextCompress instead.")]
+        [ComVisible(true)]
+        public Double TextCompress(Double a){return setTextCompress(a);}
+
+        [ComVisible(true)]        
+        public String setBkgImg(String fileName,
+            Double x,
+            Double y,
+            Double scalex = double.MinValue,
+            Double scaley = double.MinValue)
+        {          
+            setOpt("img",fileName + "," + x + "," + y + (scalex != double.MinValue && scaley != double.MinValue ? "," + scalex + "," + scaley : ""));
+            return fileName;
+        }      
+        [Obsolete("BkgImg is deprecated, please use setBkgImg instead.")]
+        [ComVisible(true)]
+        public String BkgImg(String fileName,
+            Double x,
+            Double y,
+            Double scalex = double.MinValue,
+            Double scaley = double.MinValue){return setBkgImg(fileName, x, y, scalex, scaley);}
+
+        [ComVisible(true)]
         public int setBkgPage(int pgnum)
         {
             if (pgnum > 0){
@@ -809,6 +925,16 @@ namespace FyTek
             String color = "",
             Double padding = 0)
         {return setPageBorder(width, color, padding);}
+
+        [ComVisible(true)]
+        public String setIniFile(String a = "")
+        {
+          setOpt("init",a);
+          return a;
+        }       
+        [Obsolete("IniFile is deprecated, please use setIniFile instead.")]
+        [ComVisible(true)]
+        public String IniFile(String a = ""){return setIniFile(a);}
 
         [ComVisible(true)]
         public void setBarcodes()
@@ -930,16 +1056,57 @@ namespace FyTek
             Double pointSize){return setPageTxtFont(font, pointSize);}
 
         [ComVisible(true)]
-        public String setPageStr(String a,
+        public String setPageNumStr(String a,
             int pg = 0)
         {
           setOpt("pagestr" + (pg > 0 ? pg + "" : ""),a);
           return a;
         }       
-        [Obsolete("PageStr is deprecated, please use setPageStr instead.")]
+        [Obsolete("PageStr is deprecated, please use setPageNumStr instead.")]
         [ComVisible(true)]
         public String PageStr(String a,
-            int pg = 0){return setPageStr(a, pg);}
+            int pg = 0){return setPageNumStr(a, pg);}
+
+        [ComVisible(true)]
+        public String setPageNumPos(Double x,
+            Double y,
+            int pg = 0)
+        {
+          setOpt("pagepos" + (pg > 0 ? pg + "" : ""),(x * unitsMult) + "," + (y * unitsMult));
+          return x + "," + y;
+        }       
+        [Obsolete("PagePos is deprecated, please use setPageNumPos instead.")]
+        [ComVisible(true)]
+        public String PagePos(Double x,
+            Double y,
+            int pg = 0){return setPageNumPos(x, y, pg);}
+
+        [ComVisible(true)]
+        public String setPageNumFont(String fontName,
+            Double ptSize,
+            int pg = 0)
+        {
+          setOpt("pagenumfont" + (pg > 0 ? pg + "" : ""),ptSize == 0 ? fontName : fontName + "," + ptSize);
+          return fontName;
+        }       
+        [Obsolete("PageNumFont is deprecated, please use setPageNumFont instead.")]
+        [ComVisible(true)]
+        public String PageNumFont(String fontName,
+            Double ptSize,
+            int pg = 0){return setPageNumFont(fontName, ptSize, pg);}
+
+        [ComVisible(true)]
+        public void setPageNum(String format,
+            String fontName,
+            Double ptSize,
+            Double x,
+            Double y,
+            int pg = 0)
+        {
+            setPageNumStr(format, pg);
+            setPageNumFont(fontName, ptSize, pg);
+            setPageNumPos(x, y, pg);
+        }       
 
         [ComVisible(true)]
         public String setPre(String a = "")
@@ -958,6 +1125,143 @@ namespace FyTek
         [Obsolete("Pre is deprecated, please use setPre instead.")]
         [ComVisible(true)]
         public String Pre(String a = ""){return setPre(a);}
+
+        [ComVisible(true)]
+        public String setUTF8(String lang, 
+            String encode = "")
+        {
+            String s = lang + (encode.Equals("") ? "" : "," + encode);
+            setOpt("pre",s);
+            return s;
+        }       
+        [Obsolete("UTF8 is deprecated, please use setUTF8 instead.")]
+        [ComVisible(true)]
+        public String UTF8(String lang, String encode = ""){return setUTF8(lang, encode);}
+
+        [ComVisible(true)]
+        public String setStrokeColor(String a = "")
+        {
+          setOpt("scolor",a);
+          return a;
+        }       
+        [Obsolete("SColor is deprecated, please use setStrokeColor instead.")]
+        [ComVisible(true)]
+        public String SColor(String a = ""){return setStrokeColor(a);}
+
+        [ComVisible(true)]
+        public String setFillColor(String a)
+        {
+          setOpt("scolor",a);
+          return a;
+        }       
+        [Obsolete("FColor is deprecated, please use setFillColor instead.")]
+        [ComVisible(true)]
+        public String FColor(String a){return setFillColor(a);}
+
+        [ComVisible(true)]
+        public void setColOne()
+        {
+            setOpt("c1",true);
+        }
+        [Obsolete("ColOne is deprecated, please use setColOne instead.")]
+        [ComVisible(true)]
+        public void ColOne(){setColOne();}
+
+        [ComVisible(true)]
+        public void setNoSoftBreak()
+        {
+            setOpt("nosoftbreak",true);
+        }
+        [Obsolete("NoSoftBreak is deprecated, please use setNoSoftBreak instead.")]
+        [ComVisible(true)]
+        public void NoSoftBreak(){setNoSoftBreak();}
+
+        [ComVisible(true)]
+        public void setRemoveCtl()
+        {
+            setOpt("removectl",true);
+        }
+        [Obsolete("RemoveCtl is deprecated, please use setRemoveCtl instead.")]
+        [ComVisible(true)]
+        public void RemoveCtl(){setRemoveCtl();}
+
+        [ComVisible(true)]
+        public void setPrintDlg()
+        {
+            setOpt("printdlg",true);
+        }
+        [Obsolete("UsePrintDlg is deprecated, please use setPrintDlg instead.")]
+        [ComVisible(true)]
+        public void UsePrintDlg(){setPrintDlg();}
+
+        [ComVisible(true)]
+        public String setPrinter(String printer,
+            String device = "",
+            String port = "")
+        {
+            String s = printer + (device.Equals("") ? "" : "," + device) + (port.Equals("") ? "" : "," + port);
+            setOpt("printer",s);
+            return s;
+        }
+        [Obsolete("UsePrinter is deprecated, please use setPrinter instead.")]
+        [ComVisible(true)]
+        public String UsePrinter(String printer,
+            String device = "",
+            String port = ""){return setPrinter(printer, device, port);}
+
+        [ComVisible(true)]
+        public int setNumCopies(int a)
+        {
+            if (a > 0){
+                setOpt("copies",a + "");
+            }
+            return a;
+        }
+        [Obsolete("NumCopies is deprecated, please use setNumCopies instead.")]
+        [ComVisible(true)]
+        public int NumCopies(int a){return setNumCopies(a);}
+
+        [ComVisible(true)]
+        public int setRenderMode(int a)
+        {
+            setOpt("rend",a + "");
+            return a;
+        }
+        [Obsolete("Render is deprecated, please use setRenderMode instead.")]
+        [ComVisible(true)]
+        public int Render(int a){return setRenderMode(a);}
+
+        [ComVisible(true)]
+        public int setTabSpace(int a)
+        {
+            setOpt("tabspace",a + "");
+            return a;
+        }
+        [Obsolete("TabSpace is deprecated, please use setTabSpace instead.")]
+        [ComVisible(true)]
+        public int TabSpace(int a){return setTabSpace(a);}
+
+        [ComVisible(true)]
+        public int setTabAbsSpace(int a)
+        {
+            setOpt("tababsspace",a + "");
+            return a;
+        }
+        [Obsolete("TabAbsSpace is deprecated, please use setTabAbsSpace instead.")]
+        [ComVisible(true)]
+        public int TabAbsSpace(int a){return setTabAbsSpace(a);}
+
+        [ComVisible(true)]
+        public char setAlign(char a)
+        {
+            if (char.ToString(char.ToLower(a)).IndexOfAny(new char[] {'l','r','c','j'}) != -1){                
+                setOpt("align",a);
+            }
+          return a;
+        }       
+        [Obsolete("Align is deprecated, please use setAlign instead.")]
+        [ComVisible(true)]
+        public char Align(char a){return setAlign(a);}
 
         // Calls buildPDF or buildPDFTCP
         [ComVisible(true)]
