@@ -384,11 +384,6 @@ namespace FyTek
             }
             return a;
         }
-        [Obsolete("SetKeyName is deprecated, please use setKeyName instead.")]
-        [ComVisible(true)]
-        public String SetKeyName(String a){
-            return setKeyName(a);
-        }
 
         // Assign the key code
         [ComVisible(true)]
@@ -396,11 +391,6 @@ namespace FyTek
         {
             setOpt("kc",a);
             return a;
-        }
-        [Obsolete("SetKeyCode is deprecated, please use setKeyCode instead.")]
-        [ComVisible(true)]
-        public String SetKeyCode(String a){
-            return setKeyCode(a);
         }
 
         // License settings
