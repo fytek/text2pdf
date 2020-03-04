@@ -63,7 +63,7 @@ namespace FyTek
         private Dictionary<string,object> server = new Dictionary<string,object>(); // the server host/port/log file key/values
 
         private String units = "";
-        private Double unitsMult = 72;
+        private Double unitsMult = 1;
 
         [ComVisible(true)]
         public class Results {
@@ -495,9 +495,6 @@ namespace FyTek
         {
             setOpt("guioff",true);
         }
-        [Obsolete("SetGUIOff is deprecated, please use setGUIOff instead.")]
-        [ComVisible(true)]
-        public void SetGUIOff(){setGUIOff();}
 
         // Set any other command line type options
         [ComVisible(true)]
@@ -1439,7 +1436,7 @@ namespace FyTek
             if (opts.TryGetValue("outFile", out s)) {
                 if (!s.Equals(""))
                     message += " \"" + s + "\"";
-                }
+            }
             foreach (KeyValuePair<string,object> opt in opts){
                 if (!opt.Key.Equals("inFile") && !opt.Key.Equals("outFile")){
                     if (opt.Key.Equals("extOpts")){
