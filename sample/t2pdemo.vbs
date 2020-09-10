@@ -17,7 +17,7 @@ set t2pobj = CreateObject("FyTek.Text2PDF")
 
 ' Set the location of the executable - only needed if we are starting the server or not using 
 ' a server.  When a server is used, only the host and port are needed.
-' t2pobj.setExe(".\pdfrw64")
+' t2pobj.setExe(".\text2pdf64")
  
 ' Needed to test server mode - in produciton, use setKeyName and setKeyCode with your values.  
 ' Or use licInfo method to set your license info.
